@@ -8,9 +8,12 @@ import ReturnButton from "../../components/ReturnButton";
 
 function App() {
   
+  
   const [listQuestions, setListQuestions] = useState(
     JSON.parse (localStorage.getItem("listQuestions")) || []
     );
+
+    
 
   const handleNewQuestionButton = async () =>{
     const {value} = await Swal.fire({
@@ -92,7 +95,7 @@ function App() {
     {
       listQuestions.length === 0 && (
       <h3>
-        Empty list...
+        Add a question...
       </h3>
       )
     }

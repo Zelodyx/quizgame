@@ -1,5 +1,6 @@
 import Swal from "sweetalert2";
 import {v4 as uuidv4} from 'uuid';
+import Radio from "./Radio";
 
 const ListQuestion = ({
       item,
@@ -7,7 +8,9 @@ const ListQuestion = ({
       setListQuestions,
 }) => {
 
-    const {id, Question, Answer1, Answer2, Answer3} = item;
+    const {id, Question, Answer1, Answer2, Answer3, AnswerChecked} = item;
+
+    
 
     const deleteListQuestions = () =>{
       const newList = listQuestions.filter((item) => item.id !== id);
@@ -92,6 +95,19 @@ const ListQuestion = ({
       setListQuestions(newList);
     }
 
+    const radioAnswerButton = () => {
+      const AnswerChecked = document.querySelector('input[name="answer"]:checked').value;
+      const newList = listQuestions.map((item) => {
+        if (item.id === id) {
+          item.AnswerChecked = AnswerChecked;
+        }
+        return item;
+      })
+      localStorage.setItem("listQuestions", JSON.stringify(newList));
+      setListQuestions(newList);
+    }
+    
+
     return(
         <div className="row">
           <div className="col-auto">
@@ -100,13 +116,13 @@ const ListQuestion = ({
           {"¿"}{Question}{"?"}
           </div>
           <div className="col-2 col-md-2 text-start">
-          {<input type="radio" name={id} value="0"/>}{"A)"}{Answer1}
+          {"A)"}{Answer1}
           </div>
           <div className="col-2 col-md-2 text-start">
-          {<input type="radio" name={id} value="0"/>}{"B)"}{Answer2}
+          {"B)"}{Answer2}
           </div>
           <div className="col-2 col-md-2 text-start">
-          {<input type="radio" name={id} value="0"/>}{"C)"}{Answer3}
+          {"C)"}{Answer3}
           </div>
           <div className="col-2 col-md-2 btn-group btn-group-sm text-end" role="group">
           <button 
@@ -121,6 +137,13 @@ const ListQuestion = ({
               >
               <i className="bi bi-trash2-fill"></i>
             </button>
+            <Radio
+            Answer1={Answer1}
+            Answer2={Answer2}
+            Answer3={Answer3}
+            AnswerChecked={AnswerChecked}
+            radioAnswerButton={radioAnswerButton}
+            />    
           </div>
         </div>
     );
